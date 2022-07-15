@@ -1,7 +1,5 @@
-
-
 //Masks
-$("#inputPrice").mask('000.000.000.000.000,00', {reverse: true});
+$("#inputPrice").mask('000.000.000.000.000,00', { reverse: true });
 
 var products = [
     {
@@ -43,14 +41,35 @@ var categories = [
 loadProducts();
 
 //Load all products
-function loadProducts(){
-    for(let prod of products){
+function loadProducts() {
+    for (let prod of products) {
         addNewRow(prod);
     }
 }
 
+//save a product
+function save() {
+
+    var prod = {
+        id: products.length + 1,
+        name: document.getElementById("inputName").value,
+        description: document.getElementById("inputDescription").value,
+        price: document.getElementById("inputPrice").value,
+        category: document.getElementById("selectCategory").value,
+        promotion: document.getElementById("checkBoxPromotion").checked,
+        new: document.getElementById("checkBoxNewProduct").checked
+    };
+
+    addNewRow(prod);
+    products.push(prod);
+
+    document.getElementById("formProduct").reset();
+
+}
+
+
 //Add new Row
-function addNewRow(prod){
+function addNewRow(prod) {
     var table = document.getElementById("productsTable");
 
     var newRow = table.insertRow();
@@ -61,13 +80,13 @@ function addNewRow(prod){
 
     //Insert product name
     var nameNode = document.createTextNode(prod.name);
-    newRow.insertCell().appendChild(nameNode); 
+    newRow.insertCell().appendChild(nameNode);
 
     //Insert product description
     var descriptionNode = document.createTextNode(prod.description);
-    newRow.insertCell().appendChild(descriptionNode); 
+    newRow.insertCell().appendChild(descriptionNode);
 
-     //Insert product price
+    //Insert product price
 
     var formatter = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
@@ -75,19 +94,19 @@ function addNewRow(prod){
     });
 
     var priceNode = document.createTextNode(formatter.format(prod.price));
-    newRow.insertCell().appendChild(priceNode); 
+    newRow.insertCell().appendChild(priceNode);
 
     //Insert product category
     var categoryNode = document.createTextNode(categories[prod.category - 1].name);
-    newRow.insertCell().appendChild(categoryNode); 
+    newRow.insertCell().appendChild(categoryNode);
 
     //Insert product options
-    var options= '';
-    if(prod.promotion){
+    var options = '';
+    if (prod.promotion) {
         options = '<span class="badge bg-success me-1">P</span>';
     }
 
-    if(prod.new){
+    if (prod.new) {
         options += '<span class="badge bg-primary">L</span>';
     }
 
