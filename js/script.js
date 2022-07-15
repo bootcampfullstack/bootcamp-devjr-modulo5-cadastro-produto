@@ -1,5 +1,5 @@
 //Masks
-$("#inputPrice").mask('000.000.000.000.000,00', { reverse: true });
+$("#inputPrice").mask("000.000.000.000.000,00", { reverse: true });
 
 var products = [
     {
@@ -84,13 +84,14 @@ function addNewRow(prod) {
 
     //Insert product description
     var descriptionNode = document.createTextNode(prod.description);
-    newRow.insertCell().appendChild(descriptionNode);
+    var cell = newRow.insertCell();
+    cell.className="d-none d-md-table-cell";
+    cell.appendChild(descriptionNode);
 
     //Insert product price
-
-    var formatter = new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
+    var formatter = new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
     });
 
     var priceNode = document.createTextNode(formatter.format(prod.price));
@@ -101,16 +102,18 @@ function addNewRow(prod) {
     newRow.insertCell().appendChild(categoryNode);
 
     //Insert product options
-    var options = '';
+    var options = "";
     if (prod.promotion) {
-        options = '<span class="badge bg-success me-1">P</span>';
+        options = "<span class='badge bg-success me-1'>P</span>";
     }
 
     if (prod.new) {
-        options += '<span class="badge bg-primary">L</span>';
+        options += "<span class='badge bg-primary'>L</span>";
     }
 
-    newRow.insertCell().innerHTML = options;
+    cell = newRow.insertCell();
+    cell.className="d-none d-md-table-cell";
+    cell.innerHTML = options;
 
 }
 
